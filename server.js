@@ -13,7 +13,7 @@ app.use ("/",(req,res)=>res.status(200).json({
     message:"This is Tour Api"
 }));
 
-const dburl =process.env.DATABASEURL;
+const dburl =process.env.DATABASE;
 mongoose.connect(dburl,).then(()=>console.log("database connected successfully"));
 
 

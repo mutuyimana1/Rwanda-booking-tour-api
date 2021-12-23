@@ -15,15 +15,13 @@ const tourSchema= new mongoose.Schema(
 
     },
        price:String,
-       pictures:String,
        description:String,
-       seats:String,
-       Image:[
+       seats:Number,
+       image:[
            {
                type:String,
            }
        ],
-       applicants:String,
        scheduredDate:Date,
        deadline:Date
 },
