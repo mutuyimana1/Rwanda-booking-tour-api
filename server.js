@@ -10,7 +10,7 @@ app.use(bodyParser.json());
 app.use("/user",userRouter);
 app.use("/tour",tourRouter);
 app.use ("/",(req,res)=>res.status(200).json({
-    message:"This is Tour Api"
+    message:"Url not exist"
 }));
 
 const dburl =process.env.DATABASE;

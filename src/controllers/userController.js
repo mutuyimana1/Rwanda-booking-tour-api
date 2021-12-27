@@ -1,6 +1,8 @@
 import UserInfos from "../models/user";
+import TourInfos from "../models/tours";
 import bcrypt from "bcrypt";
 import TokenAuth from "../helpers/tokenAuthe";
+import BookInfos from "../models/book";
 
 class UserController {
   //Create user in db
@@ -60,6 +62,124 @@ class UserController {
         .json({ message: "succesfully loged In", token: token, data:user });
     }
     return res.status(400).json({ error: "invalid password" });
+  }
+  //booking
+
+  static async bookTour(req, res) {
+
+    const bookData = {
+
+      user: req.user._id,
+
+      tour: req.params.id,
+
+    };
+
+ 
+
+    const book = await BookInfos.create(bookData);
+
+ 
+
+    const tour = await TourInfos.findById(req.params.id);
+
+ 
+
+    if (!book) {
+
+      return res.status(404).json({ error: "failed to book" });
+
+    }
+
+ 
+
+    return res.status(200).json({ message: "Booked successfully", data: book });
+
+  };
+
+  //get all Bookes
+
+ 
+
+  static async getAllBookings(req, res) {
+
+    const books = await BookInfos.find(req.body);
+
+ 
+
+    if (!books) {
+
+      return res.status(404).json({ error: "Book Not found" });
+
+    }
+
+ 
+
+    return res.status(200).json({ message: "Success", data: books });
+
+  }
+
+  // get all booking by user
+
+ 
+
+  static async getAllBookingsByUser(req, res) {
+
+    // console.log(req.user)
+
+    const books = await BookInfos.find({ user: req.user._id });
+
+ 
+
+    if (!books) {
+
+      return res.status(404).json({ error: "Book Not found" });
+
+    }
+
+ 
+
+    return res.status(200).json({ message: "Success", data: books });
+
+  }
+  //get all booking by tour id
+
+  static async getAllBookingsByTourId(req, res) {
+
+    const books = await BookInfos.find({ tour: req.params.idtour });
+
+ 
+
+    if (!books) {
+
+      return res.status(404).json({ error: "book not found" });
+
+    }
+
+ 
+
+    return res.status(200).json({ message: "success", data: books });
+
+  }
+   //get all booking  by user id
+
+ 
+
+   static async getaAllBookingByUserId(req, res) {
+
+    console.log("hey what is happening");
+
+    const bookings = await BookInfos.findById();
+
+    if (!bookings) {
+
+      return res.status(404).json({ error: "not found" });
+
+    }
+
+ 
+
+    return res.status(200).json({ message: "success", data: bookings });
   }
 }
 
